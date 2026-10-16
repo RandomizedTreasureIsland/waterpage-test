@@ -1,0 +1,531 @@
+/* charity: water project template
+   Based on the repository's beginner-friendly HTML/CSS structure:
+   hero -> story/impact -> call-to-action, with responsive media queries.
+*/
+:root {
+  --yellow: #ffc907;
+  --blue: #2e9df7;
+  --light-blue: #8bd1cb;
+  --navy: #073b72;
+  --cream: #fff5dc;
+  --white: #ffffff;
+  --green: #4fcb53;
+  --dark-green: #159a48;
+  --max-width: 1500px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: Avenir, "Proxima Nova", Arial, sans-serif;
+}
+
+body.modal-open { overflow: hidden; }
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+.site-header {
+  min-height: 138px;
+  background: #79aabd;
+  display: flex;
+  align-items: flex-start;
+  padding: 28px;
+  position: relative;
+  z-index: 20;
+}
+
+.brand {
+  width: 566px;
+  height: 91px;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  padding: 0 34px;
+  clip-path: polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 5% 50%);
+}
+
+.brand-mark {
+  width: 40px;
+  height: 52px;
+  background: var(--yellow);
+  border-radius: 6px;
+  margin-right: 20px;
+  position: relative;
+  flex: none;
+}
+
+.brand-mark::before,
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  border: 3px solid white;
+  border-radius: 4px;
+}
+
+.brand-mark::before {
+  top: 9px;
+  height: 12px;
+  border-bottom: 0;
+  transform: skewY(-12deg);
+}
+
+.brand-mark::after {
+  bottom: 9px;
+  height: 12px;
+  border-top: 0;
+  transform: skewY(12deg);
+}
+
+.brand-name {
+  color: #111;
+  font-family: Georgia, serif;
+  font-size: 40px;
+  letter-spacing: 7px;
+  white-space: nowrap;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 84px;
+  margin-left: 32px;
+  padding-top: 18px;
+  font-size: 30px;
+}
+
+.desktop-nav a,
+.mobile-nav a {
+  transition: opacity .2s, transform .2s;
+}
+
+.desktop-nav a:hover,
+.mobile-nav a:hover {
+  opacity: .65;
+  transform: translateY(-2px);
+}
+
+.menu-button {
+  display: none;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  font-size: 30px;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+/* Hero: the mockup's asymmetrical two-column composition. */
+.hero {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  min-height: calc(100vh - 138px);
+  background: var(--cream);
+}
+
+.hero-copy {
+  padding: 20px 34px 80px 24px;
+}
+
+.hero h1 {
+  max-width: 700px;
+  margin: 0 0 28px;
+  font-size: clamp(48px, 5.1vw, 66px);
+  line-height: .99;
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+
+.hero-text {
+  max-width: 660px;
+  margin: 0 0 28px;
+  font-size: clamp(21px, 2.15vw, 30px);
+  line-height: 1.38;
+}
+
+.hero-button {
+  margin-left: 74px;
+}
+
+.hero-image-wrap {
+  position: relative;
+  min-height: calc(100vh - 138px);
+}
+
+.hero-image-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: -38px;
+  top: -22px;
+  bottom: 0;
+  width: 76px;
+  background: var(--cream);
+  border-radius: 50%;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.donate-button {
+  border: 0;
+  border-radius: 32px;
+  background: #79aabd;
+  color: var(--navy);
+  padding: 24px 36px;
+  min-width: 355px;
+  font-size: 28px;
+  font-weight: 800;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.donate-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(7, 59, 114, .16);
+  background: #6ea2b5;
+}
+
+.button-dot {
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--navy);
+  margin-right: 25px;
+  vertical-align: 2px;
+}
+
+/* Story / impact section, following the source repo's structure. */
+.story {
+  padding: 100px 8vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+  background: white;
+}
+
+.story-content {
+  max-width: 680px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.story h2,
+.impact h2 {
+  margin: 0 0 22px;
+  font-size: clamp(40px, 5vw, 58px);
+  line-height: 1.03;
+}
+
+.story p:not(.eyebrow),
+.impact > p:not(.eyebrow) {
+  font-size: 21px;
+  line-height: 1.6;
+  color: #194d7e;
+}
+
+.story-card {
+  background: var(--cream);
+  padding: 48px;
+  border-radius: 28px;
+}
+
+.story-card h3 {
+  margin: 0 0 25px;
+  font-size: 32px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.stat {
+  padding: 20px;
+  border-radius: 18px;
+  background: #79aabd;
+}
+
+.stat strong {
+  display: block;
+  font-size: 32px;
+}
+
+.stat span {
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+/* Donation CTA: intentionally interactive, but no real payment processing. */
+.impact {
+  padding: 100px 8vw;
+  text-align: center;
+  background: #79aabd;
+}
+
+.impact h2 {
+  max-width: 850px;
+  margin-inline: auto;
+}
+
+.impact > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0 auto 28px;
+}
+
+.amounts {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 26px auto;
+}
+
+.amount {
+  padding: 13px 25px;
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.amount:hover,
+.amount.active {
+  background: var(--navy);
+  color: white;
+}
+
+.final-button {
+  min-width: 0;
+  background: var(--navy);
+  color: white;
+  border-radius: 999px;
+  padding: 18px 34px;
+}
+
+/* Simple modal interaction for the demo Donate Now flow. */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  place-items: center;
+  padding: 20px;
+  background: rgba(7, 59, 114, .67);
+}
+
+.modal.open { display: grid; }
+
+.dialog {
+  width: min(520px, 100%);
+  padding: 34px;
+  border-radius: 26px;
+  background: var(--cream);
+  box-shadow: 0 25px 70px rgba(0,0,0,.25);
+}
+
+.close-button {
+  float: right;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  font-size: 30px;
+}
+
+.dialog h2 {
+  margin: 0 0 10px;
+  font-size: 38px;
+}
+
+.dialog > p:not(.eyebrow):not(.success) {
+  line-height: 1.5;
+}
+
+.donation-form {
+  display: grid;
+  gap: 12px;
+}
+
+.donation-form label {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.donation-form input {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid #b7c7d2;
+  border-radius: 10px;
+  background: white;
+}
+
+.submit-button {
+  padding: 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--navy);
+  color: white;
+  font-weight: 800;
+}
+
+.success {
+  display: none;
+  margin: 12px 0 0;
+  padding: 14px;
+  border-radius: 10px;
+  background: #dff4e4;
+}
+
+/* Media queries keep the page readable and touch-friendly on smaller screens. */
+@media (max-width: 900px) {
+  .site-header {
+    min-height: 86px;
+    padding: 14px 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    width: 300px;
+    height: 58px;
+    padding: 0 22px;
+  }
+
+  .brand-mark {
+    width: 27px;
+    height: 35px;
+    margin-right: 12px;
+  }
+
+  .brand-mark::before,
+  .brand-mark::after {
+    left: 6px;
+    right: 6px;
+    border-width: 2px;
+  }
+
+  .brand-mark::before { top: 6px; height: 8px; }
+  .brand-mark::after { bottom: 6px; height: 8px; }
+
+  .brand-name {
+    font-size: 22px;
+    letter-spacing: 4px;
+  }
+
+  .desktop-nav { display: none; }
+  .menu-button { display: block; }
+
+  .mobile-nav {
+    position: absolute;
+    right: 16px;
+    top: 76px;
+    z-index: 30;
+    width: 220px;
+    padding: 12px;
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 15px 35px rgba(7,59,114,.2);
+  }
+
+  .mobile-nav.open { display: grid; }
+  .mobile-nav a { padding: 13px; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .hero-copy {
+    padding: 38px 24px 42px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .hero-text {
+    font-size: 21px;
+  }
+
+  .hero-button {
+    width: 100%;
+    margin-left: 0;
+    min-width: 0;
+    font-size: 21px;
+  }
+
+  .hero-image-wrap {
+    min-height: 520px;
+  }
+
+  .hero-image-wrap::before { display: none; }
+
+  .hero-image {
+    min-height: 520px;
+  }
+
+  .story {
+    grid-template-columns: 1fr;
+    padding: 70px 24px;
+    gap: 30px;
+  }
+
+  .story-card { padding: 30px; }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .impact {
+    padding: 70px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand {
+    width: 255px;
+  }
+
+  .brand-name {
+    font-size: 19px;
+    letter-spacing: 3px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .donate-button {
+    padding: 20px 24px;
+  }
+
+  .button-dot {
+    width: 18px;
+    height: 18px;
+    margin-right: 16px;
+  }
+}

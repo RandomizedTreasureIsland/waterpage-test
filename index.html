@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>charity: water — Give the gift that goes a billion miles</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="charity: water home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">charity: water</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#story">About Us</a>
+      <a href="#impact">Take Action</a>
+      <a href="#story">Why Water?</a>
+    </nav>
+
+    <button class="menu-button" type="button" aria-label="Open navigation"
+            aria-expanded="false" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#story" onclick="toggleMenu()">About Us</a>
+    <a href="#impact" onclick="toggleMenu()">Take Action</a>
+    <a href="#story" onclick="toggleMenu()">Why Water?</a>
+  </div>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">Give the gift that goes a billion miles</h1>
+
+        <p class="hero-text">
+          Women and girls in Africa spend 40 billion hours a year walking to wells.
+          We’ve cut that by 11 billion miles. This isn’t Boeing, this is charity: water -
+          the wells we’ve dug have given clean drinking water to developing countries
+          across the globe, and your gift goes straight to giving clean drinking water
+          to the people who need it most.
+        </p>
+
+        <button class="donate-button hero-button" type="button" onclick="openDonation()">
+          <span class="button-dot" aria-hidden="true"></span>
+          DONATE NOW
+        </button>
+      </div>
+
+      <div class="hero-image-wrap">
+        <img class="hero-image" src="hero-photo.jpg"
+             alt="A woman standing outdoors with a yellow water container">
+      </div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story-content">
+        <p class="eyebrow">WHY WATER MATTERS</p>
+        <h2>Clean water changes everything.</h2>
+        <p>
+          A reliable nearby water source gives families more time for school,
+          work, health and community. The original project template calls for
+          a simple story section paired with a real-world impact story.
+        </p>
+      </div>
+
+      <div class="story-card">
+        <p class="eyebrow">THE IMPACT</p>
+        <h3>Every mile saved is time given back.</h3>
+        <div class="stats">
+          <div class="stat"><strong>40B</strong><span>hours spent walking each year</span></div>
+          <div class="stat"><strong>11B</strong><span>miles already cut</span></div>
+          <div class="stat"><strong>1</strong><span>gift can help start change</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="impact" id="impact">
+      <p class="eyebrow">TAKE ACTION</p>
+      <h2>Give clean water. Give time back.</h2>
+      <p>
+        Choose an amount below to preview your donation. This demo keeps the
+        interaction local and does not process real payments.
+      </p>
+
+      <div class="amounts" role="group" aria-label="Donation amount">
+        <button class="amount active" type="button" data-amount="25">$25</button>
+        <button class="amount" type="button" data-amount="50">$50</button>
+        <button class="amount" type="button" data-amount="100">$100</button>
+        <button class="amount" type="button" data-amount="250">$250</button>
+      </div>
+
+      <button class="donate-button final-button" type="button" onclick="openDonation()">
+        Donate $25
+      </button>
+    </section>
+  </main>
+
+  <div class="modal" id="donationModal" role="dialog" aria-modal="true"
+       aria-labelledby="modalTitle" onclick="closeOnBackdrop(event)">
+    <div class="dialog">
+      <button class="close-button" type="button" aria-label="Close" onclick="closeDonation()">×</button>
+      <p class="eyebrow">DEMO DONATION</p>
+      <h2 id="modalTitle">Give <span id="modalAmount">$25</span></h2>
+      <p>This interactive prototype is ready for a real donation checkout to be connected.</p>
+
+      <form class="donation-form" onsubmit="submitDonation(event)">
+        <label>
+          Name
+          <input required name="name" placeholder="Your name">
+        </label>
+        <label>
+          Email
+          <input required type="email" name="email" placeholder="you@example.com">
+        </label>
+        <button class="submit-button" type="submit">Continue</button>
+      </form>
+      <p class="success" id="successMessage" aria-live="polite">
+        Thanks! This prototype captured your intent to donate.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("donationModal");
+    const modalAmount = document.getElementById("modalAmount");
+    const finalButton = document.querySelector(".final-button");
+    const successMessage = document.getElementById("successMessage");
+
+    function toggleMenu() {
+      const menu = document.getElementById("mobileNav");
+      const button = document.querySelector(".menu-button");
+      const open = menu.classList.toggle("open");
+      button.setAttribute("aria-expanded", String(open));
+    }
+
+    function setAmount(amount) {
+      document.querySelectorAll(".amount").forEach(button => {
+        button.classList.toggle("active", button.dataset.amount === amount);
+      });
+      finalButton.textContent = `Donate $${amount}`;
+      modalAmount.textContent = `$${amount}`;
+    }
+
+    document.querySelectorAll(".amount").forEach(button => {
+      button.addEventListener("click", () => setAmount(button.dataset.amount));
+    });
+
+    function openDonation() {
+      successMessage.style.display = "none";
+      modal.classList.add("open");
+      document.body.classList.add("modal-open");
+      document.querySelector(".dialog input")?.focus();
+    }
+
+    function closeDonation() {
+      modal.classList.remove("open");
+      document.body.classList.remove("modal-open");
+    }
+
+    function closeOnBackdrop(event) {
+      if (event.target === modal) closeDonation();
+    }
+
+    function submitDonation(event) {
+      event.preventDefault();
+      successMessage.style.display = "block";
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeDonation();
+        const menu = document.getElementById("mobileNav");
+        if (menu.classList.contains("open")) toggleMenu();
+      }
+    });
+  </script>
+</body>
+</html>
